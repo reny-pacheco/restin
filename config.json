@@ -1,0 +1,17 @@
+{
+   "db": "postgres",
+   "dbname": "mydatabase",
+   "user":"myuser",
+   "password": "mypassword",
+   "host": "localhost",
+   "tablename": "users",
+   "filename": "data.csv",
+   "port": "5432",
+   "schema": {
+      "name": "string",
+      "age": "number",
+      "location": "string",
+      "average":"decimal",
+      "subject": "string"
+   }
+}
