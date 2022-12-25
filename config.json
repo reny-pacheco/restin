@@ -1,10 +1,9 @@
 {
-   "db": "mongodb",
+   "db": "postgres",
    "dbname": "mydatabase",
-   "collection": "users",
    "user":"myuser",
    "password": "mypassword",
-   "host": "mongodb://localhost:27017/",
+   "host": "localhost",
    "tablename": "users",
    "filename": "data.csv",
    "port": "5432",

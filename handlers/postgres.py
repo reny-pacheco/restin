@@ -4,12 +4,16 @@ from concurrent import futures
 
 import psycopg2
 
+
 InsertCommand = Tuple[str, Tuple[str, str]]
 Data = Dict[str, str]
 
 
 class Postgres:
     def __init__(self, **kwargs) -> None:
+        from helpers.utils import validate_config
+
+        validate_config(kwargs)
         self.dbname = kwargs.get("dbname")
         self.table_name = kwargs.get("tablename")
         self.filename = kwargs.get("filename")

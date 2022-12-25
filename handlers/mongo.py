@@ -9,6 +9,9 @@ Data = Dict[str, str]
 
 class MongoDB:
     def __init__(self, **kwargs) -> None:
+        from helpers.utils import validate_config
+
+        validate_config(kwargs)
         self.dbname = kwargs.get("dbname")
         self.collection = kwargs.get("collection")
         self.filename = kwargs.get("filename")
