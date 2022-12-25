@@ -2,7 +2,7 @@
 
 ### An automation tool for inserting data to database from a csv file.
 
-Currently compatible with Postgres.
+Currently compatible with Postgres and MongoDB.
 
 ### How to use?
 
