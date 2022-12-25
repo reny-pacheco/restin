@@ -4,6 +4,9 @@ from concurrent import futures
 
 import psycopg2
 
+InsertCommand = Tuple[str, Tuple[str, str]]
+Data = Dict[str, str]
+
 
 class Postgres:
     def __init__(self, **kwargs) -> None:
@@ -18,7 +21,7 @@ class Postgres:
         self.cursor = None
         self.connection = None
 
-    def connect(self):
+    def connect(self) -> "Postgres":
         try:
             connection = psycopg2.connect(
                 dbname=self.dbname,
@@ -33,7 +36,7 @@ class Postgres:
         except psycopg2.OperationalError:
             print("Error while connecting to DB")
 
-    def create_table(self):
+    def create_table(self) -> "Postgres":
         try:
             command = self.__create_table_command()
             self.cursor.execute(command)
@@ -48,7 +51,7 @@ class Postgres:
             print(e)
             print("Error while creating table")
 
-    def insert_data(self):
+    def insert_data(self) -> "Postgres":
         try:
             with open(self.filename, "r") as file:
                 reader = csv.DictReader(file)
@@ -83,9 +86,7 @@ class Postgres:
             command += f"{key} {Schema[value].value},"
         return command[:-1] + ")"
 
-    def __create_insert_command(
-        self, data: Dict[str, str]
-    ) -> Tuple[str, Tuple[str, str]]:
+    def __create_insert_command(self, data: Data) -> InsertCommand:
         command = f"INSERT INTO {self.table_name}"
         col = "("
         row = "VALUES ("
