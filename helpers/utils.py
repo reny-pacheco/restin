@@ -1,11 +1,12 @@
 import json
+from typing import Dict
 
 from helpers.enums import DB
 
 from handlers.postgres import Postgres
 
 
-def read_config():
+def read_config() -> Dict[str, str]:
     try:
         with open("config.json", "r") as file:
             json_string = file.read()
@@ -14,7 +15,7 @@ def read_config():
         print("config.json file not found")
 
 
-def get_handler(db) -> Postgres:
+def get_handler(db: str) -> Postgres:
     try:
         return DB[db].value
     except KeyError:
