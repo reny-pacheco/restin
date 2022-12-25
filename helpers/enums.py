@@ -1,6 +1,7 @@
 from enum import Enum
 
 from handlers.postgres import Postgres
+from handlers.mongo import MongoDB
 
 
 class Schema(Enum):
@@ -12,3 +13,4 @@ class Schema(Enum):
 
 class DB(Enum):
     postgres = Postgres
+    mongodb = MongoDB

@@ -36,22 +36,11 @@ class Postgres:
         except psycopg2.OperationalError:
             print("Error while connecting to DB")
 
-    def create_table(self) -> "Postgres":
-        try:
-            command = self.__create_table_command()
-            self.cursor.execute(command)
-            self.connection.commit()
-            print("Table is now ready")
-            return self
-        except (
-            AttributeError,
-            psycopg2.ProgrammingError,
-            psycopg2.OperationalError,
-        ) as e:
-            print(e)
-            print("Error while creating table")
-
     def insert_data(self) -> "Postgres":
+        # create table if table doesn't exist
+        self.__create_table()
+        print("Inserting data...")
+
         try:
             with open(self.filename, "r") as file:
                 reader = csv.DictReader(file)
@@ -85,6 +74,20 @@ class Postgres:
         ) in self.schema.items():
             command += f"{key} {Schema[value].value},"
         return command[:-1] + ")"
+
+    def __create_table(self):
+        try:
+            command = self.__create_table_command()
+            self.cursor.execute(command)
+            self.connection.commit()
+            print("Table is now ready")
+        except (
+            AttributeError,
+            psycopg2.ProgrammingError,
+            psycopg2.OperationalError,
+        ) as e:
+            print(e)
+            print("Error while creating table")
 
     def __create_insert_command(self, data: Data) -> InsertCommand:
         command = f"INSERT INTO {self.table_name}"

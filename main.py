@@ -8,11 +8,11 @@ def main():
     start_time = time.time()
 
     db_config = read_config()
-    db_type = db_config.get("db", "postgres")
+    db_type = db_config.get("db")
 
     DBHandler = get_handler(db_type)(**db_config)
     db_adapter = DBAdapter(DBHandler)
-    db_adapter.connect().create_table().insert_data().close()
+    db_adapter.connect().insert_data().close()
 
     end_time = time.time()
     elapsed_time = end_time - start_time
