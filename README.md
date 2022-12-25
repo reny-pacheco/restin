@@ -1,4 +1,4 @@
-## dbinsert
+## restin
 
 ### An automation tool for inserting data to database from a csv file.
 
@@ -6,9 +6,11 @@ Currently compatible with Postgres.
 
 ### How to use?
 
-Set up your Postgres database and update `config.json` file based on your db configuration.
+Set up your Postgres or MongoDB database and update `config.json` file based on your db configuration.
 
-**Example:**
+### Example:
+
+**Postgres config**
 
 ```json
 {
@@ -30,9 +32,24 @@ Set up your Postgres database and update `config.json` file based on your db con
 }
 ```
 
+**MongoDB config**
+
+```json
+{
+  "db": "mongodb",
+  "dbname": "mydatabase",
+  "collection": "users",
+  "user": "myuser",
+  "password": "mypassword",
+  "host": "mongodb://localhost:27017/",
+  "tablename": "users",
+  "filename": "data.csv"
+}
+```
+
 **Notes:**
 
-- `db` is the type of database you are using, e.g. postgress or mongodb.
+- `db` is the type of database you are using, e.g. postgres or mongodb.
 - `filename` should be in the current project directory.
 - `schema` should based on your csv headers. Keys are your column names and values are your data types. Currently, `string`, `text`, `number`, and `decimal` are the supported data types.
 
@@ -49,6 +66,7 @@ For running the app use this command
 
 **Todos**
 
-- Add support for MySql, and MongoDB
+- Add support for MySql
 - Improve logging
 - Add test
+- Add web user interface
