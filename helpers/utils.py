@@ -6,9 +6,12 @@ from handlers.postgres import Postgres
 
 
 def read_config():
-    with open("config.json", "r") as file:
-        json_string = file.read()
-    return json.loads(json_string)
+    try:
+        with open("config.json", "r") as file:
+            json_string = file.read()
+        return json.loads(json_string)
+    except FileNotFoundError:
+        print("config.json file not found")
 
 
 def get_handler(db) -> Postgres:
