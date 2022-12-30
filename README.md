@@ -43,7 +43,14 @@ Set up your Postgres or MongoDB database and update `config.json` file based on 
   "password": "mypassword",
   "host": "mongodb://localhost:27017/",
   "tablename": "users",
-  "filename": "data.csv"
+  "filename": "data.csv",
+  "schema": {
+    "name": "string",
+    "age": "number",
+    "location": "string",
+    "average": "decimal",
+    "subject": "string"
+  }
 }
 ```
 
