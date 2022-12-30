@@ -14,6 +14,7 @@ class MongoDB:
         validate_config(kwargs)
         self.dbname = kwargs.get("dbname")
         self.collection = kwargs.get("collection")
+        self.schema = kwargs.get("schema")
         self.filename = kwargs.get("filename")
         self.user = kwargs.get("user")
         self.password = kwargs.get("password")
@@ -44,7 +45,7 @@ class MongoDB:
                     for data in reader:
                         executor.submit(self.__insert, data)
 
-            print("All data inserted")
+            print("Data insertion has been completed")
             return self
         except FileNotFoundError:
             print("Error while inserting data")
@@ -54,6 +55,16 @@ class MongoDB:
         print("DB connection closed.")
 
     def __insert(self, data):
-        db = self.client[self.dbname]
-        collection = db[self.collection]
-        collection.insert_one(data)
+        try:
+            db = self.client[self.dbname]
+            collection = db[self.collection]
+            data = self.__serialize(data)
+            collection.insert_one(data)
+        except ValueError:
+            print(f"Error while inserting data ==> {data}")
+
+    def __serialize(self, data):
+        for key, value in self.schema.items():
+            if value in ["number", "decimal"]:
+                data[key] = float(data[key])
+        return data
