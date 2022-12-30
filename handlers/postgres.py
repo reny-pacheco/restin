@@ -109,6 +109,16 @@ class Postgres:
         return command, tuple(values)
 
     def __insert(self, data):
-        insert_command, values = self.__create_insert_command(data)
-        self.cursor.execute(insert_command, values)
-        self.connection.commit()
+        try:
+            self.__serialize(data)
+            insert_command, values = self.__create_insert_command(data)
+            self.cursor.execute(insert_command, values)
+            self.connection.commit()
+        except ValueError:
+            print(f"Error while inserting data ==> {data}")
+
+    def __serialize(self, data):
+        for key, value in self.schema.items():
+            if value in ["number", "decimal"]:
+                data[key] = float(data[key])
+        return data
