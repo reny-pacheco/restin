@@ -4,10 +4,12 @@ from concurrent import futures
 
 from pymongo import MongoClient, errors
 
+from handlers.insert_base import InsertBase
+
 Data = Dict[str, str]
 
 
-class MongoDB:
+class MongoDB(InsertBase):
     def __init__(self, **kwargs) -> None:
         from helpers.utils import validate_config
 
