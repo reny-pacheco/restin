@@ -4,12 +4,14 @@ from concurrent import futures
 
 import psycopg2
 
+from handlers.insert_base import InsertBase
+
 
 InsertCommand = Tuple[str, Tuple[str, str]]
 Data = Dict[str, str]
 
 
-class Postgres:
+class Postgres(InsertBase):
     def __init__(self, **kwargs) -> None:
         from helpers.utils import validate_config
 
